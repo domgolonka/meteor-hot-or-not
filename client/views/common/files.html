@@ -1,0 +1,44 @@
+<template name="files">
+    <div id="dropzone" class="dropzone">
+        <div class="dropzone-text">Drop file(s) here to upload</div>
+    </div>
+    <div class="imageArea clear">
+        {{#each uploadedImages}}
+            {{#unless this.isUploaded}}
+                {{> FS.UploadProgressBar semantic=true showPercent=true}}
+            {{/unless}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="uploadedImage">
+    <div class="ui card">
+        <div class="image">
+            <a  href="{{this.url}}"><img src="{{this.url store='thumbs'}}"></a>
+        </div>
+        <div class="content">
+            <a  href="{{this.url}}" class="header">Name: {{this.name}}</a>
+            <div class="meta">
+                <span class="date">Score: {{this.score}}</span>
+                <span class="date">Votes: {{this.votes}}</span>
+            </div>
+            <div class="description">
+                <em>Original size: {{this.formattedSize}}<br>Thumbnail size: {{this.formattedSize store="thumbs"}}<br>Type: {{this.type store="images"}}</em>
+            </div>
+        </div>
+        <div class="extra content">
+            <a>
+                {{#if this.isUploaded}}
+                    {{#if this.hasStored 'images'}}
+                        {{#with this.url download=true}}
+                            <a href="{{this}}" class="ui toggle button" role="button">Download</a>
+                        {{/with}}
+                    {{else}}
+                        Storing...
+                    {{/if}}
+                {{/if}}
+                {{> FS.DeleteButton class="negative ui button"}}
+            </a>
+        </div>
+    </div>
+</template>

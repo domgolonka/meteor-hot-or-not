@@ -1,0 +1,97 @@
+<template name="header">
+    <div class="header-wrapper">
+        <div class="ui right aligned grid">
+            <div class="right floated left aligned three wide column menu-wrapper">
+                <div class="ui segment">
+                    <div class="ui  labeled icon menu">
+                        {{#if currentUser}}
+
+                            <a class="red upload item">
+                                <i class="cloud upload icon"></i>
+                                Upload
+                            </a>
+                            <a href="#list" class="teal item">
+                                <i class="lab icon"></i>
+                                List Images
+                            </a>
+                            <a class="green log-out item">
+                                <i class="sign out icon"></i>
+                                Log Out
+                            </a>
+
+                        {{else}}
+                            <a class="green log-in item">
+                                <i class="sign in icon"></i>
+                                Login
+                            </a>
+
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center aligned ">
+            <h1 class="huge center aligned main ui header">
+                {{constant 'name'}}
+            </h1>
+
+            {{> rating }}
+            <div class="login-wrapper {{animateClass}} animated">
+                {{#if showLogin}}
+                    {{> atForm }}
+                {{/if}}
+            </div>
+
+        </div>
+        {{#if currentUser}}
+        <div class="ui upload modal">
+            <i class="close icon"></i>
+            <div class="header">
+                Upload your file(s)
+            </div>
+            {{> files}}
+            <div class="actions">
+                <div class="ui button">Cancel</div>
+                <div class="ui button">OK</div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="birthdayInput">
+    <div class="at-input required field">
+        <label>{{displayName}}</label>
+        <input type="{{type}}" class="datepicker" id="at-field-{{_id}}" name="at-field-{{_id}}" placeholder="{{placeholder}}" autocapitalize="none" autocorrect="off">
+    </div>
+</template>
+
+
+<template name="rating">
+    {{#each uploadedImages}}
+        <div class="ui card rating">
+            <div class="content">
+                <a class="header">Rate this person</a>
+            </div>
+            <div class="image">
+                <img src="{{this.url store='images'}}">
+            </div>
+            <div class="extra content">
+                {{#if currentUser}}{{statetext}}
+                    <div class="ui heart rating {{state}}" data-rating="0" data-max-rating="10"></div>
+                {{else}}
+
+                    <div class="ui heart rating {{state}}" data-rating="0" data-max-rating="10"></div>
+                {{/if}}
+                <p>Votes:  {{this.votes}}</p>
+                <p>Score: {{this.score}}</p>
+                <p>Rating: {{this.rating}}</p>
+                <p>Rated this person?: {{ alreadyVoted this._id }}</p>
+            </div>
+        </div>
+    {{/each}}
+</template>
+
+<template name="loadingPage">
+    <h1>Loading...</h1>
+</template>

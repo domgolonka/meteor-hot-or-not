@@ -1,0 +1,12 @@
+<template name="home">
+    {{#if currentUser}}
+    <div id="list" class="main-content padding-wrapper">
+        <div class="ui grid">
+            {{#each uploadedImages}}
+                <div class="four wide column">{{> uploadedImage}}</div>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
+
+</template>
